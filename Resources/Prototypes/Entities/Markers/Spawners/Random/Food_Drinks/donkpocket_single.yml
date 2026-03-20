@@ -1,0 +1,29 @@
+- type: entityTable
+  id: DonkPocketSingleTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodDonkpocket
+    - id: FoodDonkpocketDank
+    - id: FoodDonkpocketSpicy
+    - id: FoodDonkpocketTeriyaki
+    - id: FoodDonkpocketPizza
+    - id: FoodDonkpocketHonk
+    - id: FoodDonkpocketBerry
+    - id: FoodDonkpocketStonk
+    - id: FoodDonkpocketCarp
+    - id: FoodDonkpocketMoth
+
+- type: entityTable
+  id: DonkPocketSingleTableWarm
+  table: !type:GroupSelector
+    children:
+    - id: FoodDonkpocketWarm
+    - id: FoodDonkpocketDankWarm
+    - id: FoodDonkpocketSpicyWarm
+    - id: FoodDonkpocketTeriyakiWarm
+    - id: FoodDonkpocketPizzaWarm
+    - id: FoodDonkpocketHonkWarm
+    - id: FoodDonkpocketBerryWarm
+    - id: FoodDonkpocketStonkWarm
+    - id: FoodDonkpocketCarpWarm
+    - id: FoodDonkpocketMothWarm

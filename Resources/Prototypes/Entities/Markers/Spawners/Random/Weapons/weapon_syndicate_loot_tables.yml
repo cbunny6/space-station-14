@@ -1,0 +1,57 @@
+#added these entity tables just so I can give the rat king a rare chance of pulling a chinalake. its barebones, but its here now, change it as you please.
+- type: entityTable
+  id: SyndicateRandomWeaponTableGun
+  table: !type:GroupSelector
+    children:
+      - !type:NestedSelector #small guns
+        tableId: SyndicateRandomWeaponTableGunPistols
+        weight: 5
+      - !type:NestedSelector #shotguns
+        tableId: SyndicateRandomWeaponTableGunShotguns
+        weight: 3
+      - !type:NestedSelector #long arms
+        tableId: SyndicateRandomWeaponTableGunLongarms
+        weight: 2
+      - !type:GroupSelector
+        weight: 1
+        children:
+        - id: WeaponLauncherChinaLake
+        - id: WeaponLightMachineGunL6
+
+- type: entityTable
+  id: SyndicateRandomWeaponTableGunPistols
+  table: !type:GroupSelector
+    children:
+    - id: WeaponPistolViper
+    - id: WeaponPistolCobra
+    - id: WeaponRevolverPython
+    - id: WeaponPistolCHIMPUpgraded
+
+- type: entityTable
+  id: SyndicateRandomWeaponTableGunShotguns
+  table: !type:GroupSelector
+    children:
+    - id: WeaponShotgunBulldog
+    - id: WeaponShotgunHushpup
+    - id: WeaponSniperMosin
+
+- type: entityTable
+  id: SyndicateRandomWeaponTableGunLongarms
+  table: !type:GroupSelector
+    children:
+    - id: WeaponRifleEstoc
+    - id: WeaponSubMachineGunC20r
+    - id: WeaponSniperHristov
+
+- type: entityTable #for melee weapon
+  id: SyndicateRandomWeaponTableMelee
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHandsKnuckleDustersSyndicate
+      weight: 10
+    - id: EnergySword
+      weight: 8
+    - id: ClothingHandsGlovesNorthStar
+      weight: 1
+    - id: EnergySwordDouble
+      weight: 0.1

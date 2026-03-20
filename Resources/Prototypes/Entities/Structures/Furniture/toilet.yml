@@ -226,3 +226,63 @@
           Quantity: 20
         - ReagentId: GastroToxin
           Quantity: 20
+
+type: entity
+  parent: BaseToilet
+  id: ToiletObliterator5000
+  name: donk co. obliterator 5000
+  description: The Obliterator 5000 is an exclusive Donk Co. varient of the standard HT-451G waste disposal unit. Full of sulfuric acid, the cistern is said to be able to destroy anything. Your mission is to dip your balls in the toilet water and avoid splashback. Beware splashback agent, begin shitten.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/
+  - type: StaticPrice
+    price: 1500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 5
+            max: 5
+  - type: Rummageable
+    table: !type:NestedSelector
+      tableId: RatKingObliteratorLoot
+
+  - type: entity
+    parent: ToiletGoldenEmpty
+    id: ToiletGoldenDirtyWater
+    suffix: Dirty Water, StealTarget
+    components:
+    - type: StealTarget
+      stealGroup: ToiletGoldenDirtyWater
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 100
+        tank:
+          maxVol: 500
+          reagents:
+          - ReagentId: Water
+            Quantity: 160
+          - ReagentId: Gold
+            Quantity: 20
+          - ReagentId: GastroToxin
+            Quantity: 20

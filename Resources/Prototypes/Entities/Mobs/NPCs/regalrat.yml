@@ -316,6 +316,32 @@
     - id: IngotGold1
       weight: 5
 
+#this absurd thing was the longest part of making the syndie toilet, and I'll be shocked if see someone pull a behonker laser before the total heat death of the universe.
+- type: entityTable
+  id: RatKingDonkCoToiletLoot
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      weight: 50
+      tableId: DonkPocketSingleTableWarm
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:NestedSelector
+      weight: 25
+      tableId: DonkPocketSingleTable
+      amount: !type:RangeNumberSelector
+        range: 2, 4
+    - !type:NestedSelector
+      weight: 5
+      tableId: SyndicateRandomWeaponTableGun
+    - !type:NestedSelector
+      weight: 4.99
+      tableId: SyndicateRandomWeaponTableMelee
+    - id: WeaponBehonkerLaser
+      weight: 0.01
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+
 - type: entity
   parent: BaseAction
   id: ActionRatKingRaiseArmy
