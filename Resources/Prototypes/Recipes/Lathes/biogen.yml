@@ -247,7 +247,64 @@
     state: sugar-big
   completetime: 1
   materials:
+    Biomass: 4
+
+- type: latheRecipe
+  id: BioGenProtein
+  resultReagents:
+    Protein: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: sugar-big
+  completetime: 1
+  materials:
+    Biomass: 4
+
+- type: latheRecipe
+  id: BioGenFat
+  resultReagents:
+    Fat: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: sugar-big
+  completetime: 1
+  materials:
+    Biomass: 9
+
+- type: latheRecipe
+  id: BioGenUncookedAnimalProteins
+  resultReagents:
+    UncookedAnimalProteins: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: sugar-big
+  completetime: 1
+  materials:
     Biomass: 18
+
+- type: latheRecipe
+  id: BioGenOil
+  resultReagents:
+    Oil: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: sugar-big
+  completetime: 1
+  materials:
+    Biomass: 18
+
+##protein
+##fat
+##uncooked animal protein
+##oil
 
 - type: latheRecipe
   id: BioGenDiseaseSwab
@@ -257,6 +314,32 @@
   completetime: 3
   materials:
     Biomass: 2
+
+- type: latheRecipe
+  id: BioGenAmmonia
+  resultReagents:
+    Ammonia: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  completetime: 2
+  materials:
+    Biomass: 10
+
+- type: latheRecipe
+  id: BioGenSedin
+  resultReagents:
+    Sedin: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  completetime: 6
+  materials:
+    Biomass: 20
 
 - type: latheRecipe
   id: BioGenUnstableMutagen
@@ -269,4 +352,17 @@
     state: bottle-1
   completetime: 5
   materials:
-    Biomass: 20
+    Biomass: 15
+
+- type: latheRecipe
+  id: BioGenPhalanximine
+  resultReagents:
+    Phalanximine: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  completetime: 2
+  materials:
+    Biomass: 7

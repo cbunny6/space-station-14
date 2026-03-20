@@ -21,6 +21,12 @@
   - BioGenEZNutrient
   - BioGenRobustHarvest
   - BioGenDiseaseSwab
+  - BioGenAmmonia
+  - BioGenSedin
+  - BioGenProtein
+  - BioGenFat
+  - BioGenUncookedAnimalProteins
+  - BioGenOil
 
 - type: latheRecipePack
   id: BioGenMaterialsStatic
@@ -34,3 +40,4 @@
   id: BioGenEmagStatic
   recipes:
   - BioGenUnstableMutagen
+  - BioGenPhalanximine
