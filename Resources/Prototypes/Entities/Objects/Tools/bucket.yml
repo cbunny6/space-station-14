@@ -45,3 +45,13 @@
     solutions:
       drink:
         maxVol: 500
+
+- type: entity
+  parent: Bucket
+  id: WoodenBucket
+  name: wooden bucket
+
+- type: entity
+  parent: WoodenBucket
+  id: WoodenBucketWithHole
+  name: wooden bucket
