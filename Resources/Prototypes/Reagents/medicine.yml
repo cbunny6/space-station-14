@@ -1525,3 +1525,54 @@
           reagent: Heparin
           min: 15
         amount: 0.25
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 15
+          max: 25
+        type: Local
+        visualType: Medium
+        messages: ["heparin-effect-bruising"]
+        probability: 0.33
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 25
+        type: Local
+        visualType: Large
+        messages: ["heparin-effect-internal-bleeding"]
+        probability: 0.33
+    Digestion: #Digestion incase med wants to hand out DVT pills lol
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAnticoagulant
+        time: 30
+        type: Update
+      - !type:ModifyBleed
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 15
+        amount: 0.25
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 15
+          max: 25
+        type: Local
+        visualType: Medium
+        messages: [ "heparin-effect-bruising" ]
+        probability: 0.33
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 25
+        type: Local
+        visualType: Large
+        messages: [ "heparin-effect-internal-bleeding" ]
+        probability: 0.33
+

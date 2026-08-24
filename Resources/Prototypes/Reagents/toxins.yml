@@ -47,6 +47,17 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+    Digestion:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
 
 - type: reagent
   id: ChloralHydrate
@@ -79,6 +90,26 @@
         damage:
           types:
             Poison: 1.5
+    Digestion:
+      effects:
+      - !type:Emote
+        emote: Yawn
+        probability: 0.1
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 4
+        type: Update
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
 
 - type: reagent
   id: GastroToxin
@@ -89,7 +120,7 @@
   color: "#acc91a"
   physicalDesc: reagent-physical-desc-putrid
   metabolisms:
-    Bloodstream:
+    Digestion:
       effects:
         - !type:HealthChange
           damage:
@@ -99,7 +130,7 @@
           conditions:
           - !type:ReagentCondition
             reagent: GastroToxin
-            min: 2
+            min: 5
           probability: 0.2
 
 - type: reagent
@@ -112,7 +143,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
-    Bloodstream:
+    Digestion:
       effects:
       - !type:HealthChange
         damage:
@@ -175,7 +206,7 @@
   color: "#48b3b8"
   physicalDesc: reagent-physical-desc-ferrous
   metabolisms:
-    Bloodstream:
+    Digestion:
       effects:
       - !type:Satiate
         satiationType: Thirst
@@ -299,6 +330,12 @@
         damage:
           types:
             Radiation: 3
+    Digestion:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 3
 
 - type: reagent
   id: HeartbreakerToxin
@@ -355,6 +392,13 @@
         type: Add
         time: 10
   # TODO: PROPER hallucinations
+    Digestion:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 10
+
 
 - type: reagent
   id: Histamine
@@ -366,12 +410,19 @@
   metabolisms:
     Bloodstream:
       effects:
+      - !type:Emote
+        emote: Cough
+        showInGuidebook: true
+        probability: 0.1
+      - !type:Emote
+        emote: Sneeze
+        showInGuidebook: true
+        probability: 0.05
       - !type:HealthChange
         probability: 0.1
         damage:
           types:
             Blunt: 2
-      # todo: cough, sneeze
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -407,7 +458,7 @@
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
     Bloodstream:
-      metabolismRate: 0.05
+      metabolismRate: 0.05 #5u = 60
       effects:
       - !type:HealthChange
         conditions:
@@ -415,12 +466,13 @@
           type: [ Animal, Arachnid ] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
-            Poison: 0.4
+            Poison: 0.6 #this is a lot lower than it looks, cause digestion is half, and vomit clears bloodstream
       - !type:Vomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Animal, Arachnid ]
+
 
 - type: reagent
   id: Amatoxin
@@ -432,6 +484,13 @@
   color: "#D6CE7B"
   metabolisms:
     Bloodstream:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+    Digestion:
       metabolismRate: 0.2
       effects:
       - !type:HealthChange
@@ -473,6 +532,13 @@
             - !type:ReagentCondition
               reagent: Romerol
               min: 5
+    Digestion:
+      effects:
+      - !type:CauseZombieInfection
+        conditions:
+        - !type:ReagentCondition
+          reagent: Romerol
+          min: 4.5 #just making absolute sure it works, no matter what
 
 - type: reagent
   id: UncookedAnimalProteins
@@ -527,6 +593,52 @@
           type: [ Vox ]
         reagent: Protein
         amount: 0.25
+#we need a tag that lets us go Metabolisms [Digestion, Bloodstream] tag
+    Digestion:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox, Arachnid ]
+          inverted: true
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-sick" ]
+        probability: 0.5
+      - !type:Vomit
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox, Plant, Arachnid ]
+          inverted: true
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox, Plant, Arachnid ]
+          inverted: true
+        damage:
+          types:
+            Poison: 1
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plant ]
+        damage:
+          types:
+            Poison: .25
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Arachnid ]
+        reagent: Protein
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Vox ]
+        reagent: Protein
+        amount: 0.25
+
 
 - type: reagent
   id: Allicin
@@ -537,19 +649,55 @@
   flavor: bitter
   color: "#F2E9D2"
   metabolisms:
-    Digestion:
-      metabolismRate: 0.05
+    Bloodstream: #weird choice I know, but allicin kills by making bloodcells burst in dogs
+      metabolismRate: 0.05 #5u = 12 poison
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentCondition
-          reagent: Allicin
-          min: 1
         - !type:MetabolizerTypeCondition
           type: [ Animal ]
         damage:
           types:
-            Poison: 0.06
+            Poison: 0.12 #not much, and only if you inject it
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Allicin
+          min: 2
+          max: 12
+        visualType: Medium
+        messages: [You can smell onions.]
+        type: Local
+        probability: 0.01
+      - !type:ModifyBleed
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal ]
+        - !type:ReagentCondition
+          reagent: Allicin
+          min: 12
+        probability: 0.2
+        amount: 0.1
+      - !type:Emote
+        emote: Scream
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal ]
+        - !type:ReagentCondition
+          reagent: Allicin
+          min: 12
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal ]
+        - !type:ReagentCondition
+          reagent: Allicin
+          min: 12
+        visualType: Medium
+        messages: ["heparin-effect-bruising", "heparin-effect-internal-bleeding"]
+        type: Local
+        probability: 0.1
 
 - type: reagent
   id: Honk
@@ -578,7 +726,24 @@
         damage:
           types:
             Poison: 0.06
-
+    Digestion:
+      metabolismRate: 0.05
+      effects:
+      - !type:Emote
+        emote: Honk
+        showInGuidebook: true
+        force: true
+        probability: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Honk
+          min: 1
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Arachnid ]
+        damage:
+          types:
+            Poison: 0.06
 
 - type: reagent
   id: Lead
@@ -590,12 +755,63 @@
   color: "#5C6274"
   metabolisms:
     Bloodstream:
-      metabolismRate: 0.03 # Effectively once every 30 seconds.
+      metabolismRate: 0.03 # Effectively 1 unit every 30 seconds.
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.6 # Makes it 20 damage per unit.
+            Poison: 0.6 #20 damage per unit.
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: lead
+          min: 15
+        effectProto: StatusEffectSlurred
+        time: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lead
+          min: 20
+          max: 1978
+        visualType: Medium
+        messages: [ "reagent-effect-lead-paint-stare", "reagent-effect-lead-paint-stare2" ]
+        type: Local
+        probability: 0.01
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lead
+          min: 30
+    Digestion:
+      metabolismRate: 0.03
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.6
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: lead
+          min: 15
+        effectProto: StatusEffectSlurred
+        time: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lead
+          min: 20
+          max: 1978
+        visualType: Medium
+        messages: [ "reagent-effect-lead-paint-stare", "reagent-effect-lead-paint-stare2" ]
+        type: Local
+        probability: 0.01
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lead
+          min: 30
 
 - type: reagent
   id: Bungotoxin
@@ -603,10 +819,10 @@
   group: Toxins
   desc: reagent-desc-bungotoxin
   physicalDesc: reagent-physical-desc-nondescript
-  contrabandSeverity: Major
+  contrabandSeverity: Minor #less than amatox cause its lower damage and digestion only
   color: "#EBFF8E"
   metabolisms:
-    Bloodstream:
+    Digestion:
       metabolismRate: 0.2
       effects:
       - !type:HealthChange
@@ -686,6 +902,19 @@
       - !type:Satiate
         satiationType: Hunger
         factor: -6
+    Digestion: #same as above
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:SatiationCondition
+          satiationType: Hunger
+          max: 50
+        damage:
+          types:
+            Poison: 2
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -6
 
 # inspired by the spider neurotoxin GsMtx-4
 # poisons non-spiders and slows you down at high doses
@@ -746,6 +975,12 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Vox]
+      - !type:Vomit
+        probability: 0.3
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
+          inverted: true
 
 - type: reagent
   id: Hemorrhinol
@@ -765,6 +1000,32 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hemorrhinol
+          min: 10
+          max: 30
+        type: Local
+        visualType: Medium
+        messages: [ "heparin-effect-bruising" ]
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hemorrhinol
+          min: 30
+        type: Local
+        visualType: Large
+        messages: [ "heparin-effect-internal-bleeding" ]
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hemorrhinol
+          min: 30
+        emote: Gasp
+        probability: 0.75
 
 - type: reagent
   id: Hivarol
